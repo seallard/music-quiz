@@ -1,0 +1,16 @@
+name: linting
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Run Ruff Linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Ruff Linting
+        uses: chartboost/ruff-action@v1
