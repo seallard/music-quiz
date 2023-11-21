@@ -26,4 +26,4 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: "seallard/music-quiz-api:{{ steps.get_tag.outputs.TAG_NAME }}"
+          tags: "seallard/music-quiz-api:${{ env.TAG_NAME }}"
