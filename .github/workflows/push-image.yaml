@@ -1,0 +1,27 @@
+name: docker hub push
+
+on:
+  workflow_run:
+    workflows: ["bump version"]
+    types:
+      - completed
+
+jobs:
+  docker-image-push:
+    runs-on: ubuntu-latest
+    steps:
+      - id: get_tag
+        run: |
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "TAG_NAME=$LATEST_TAG" >> $GITHUB_ENV
+      - uses: actions/checkout@4
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: docker/build-push-action@v3
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: "seallard/music-quiz-api:{{ steps.get_tag.outputs.TAG_NAME }}"
