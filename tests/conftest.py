@@ -1,5 +1,4 @@
 import pytest
-import requests_mock
 
 from quiz.clients.spotify_client import SpotifyAPIClient
 
