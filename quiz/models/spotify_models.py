@@ -48,3 +48,21 @@ class TopItems(BaseModel):
     previous: str | None
     total: int
     items: list[Item]
+
+
+class Cursor(BaseModel):
+    after: str
+    before: str
+
+
+class Artists(BaseModel):
+    href: str
+    limit: int
+    next: str
+    cursors: Cursor
+    total: int
+    items: list[Item]
+
+
+class FollowedArtists(BaseModel):
+    artists: Artists

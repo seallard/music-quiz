@@ -63,5 +63,38 @@ def top_items_response() -> dict:
 
 
 @pytest.fixture
+def artists_response() -> dict:
+    return {
+        "artists": {
+            "href": "string",
+            "limit": 0,
+            "next": "string",
+            "cursors": {"after": "string", "before": "string"},
+            "total": 0,
+            "items": [
+                {
+                    "external_urls": {"spotify": "string"},
+                    "followers": {"href": "string", "total": 0},
+                    "genres": ["Prog rock", "Grunge"],
+                    "href": "string",
+                    "id": "string",
+                    "images": [
+                        {
+                            "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                            "height": 300,
+                            "width": 300,
+                        }
+                    ],
+                    "name": "string",
+                    "popularity": 0,
+                    "type": "artist",
+                    "uri": "string",
+                }
+            ],
+        }
+    }
+
+
+@pytest.fixture
 def client() -> SpotifyAPIClient:
     return SpotifyAPIClient()
