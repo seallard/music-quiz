@@ -17,18 +17,16 @@ class SpotifyAPIClient:
         response = requests.get(url, headers)
         return UserProfile.model_validate(response.json())
 
-    def get_user_top_items(
-        self, item_type: str, access_token: str, limit: int = 10, offset: int = 0
-    ) -> TopItems:
+    def get_user_top_items(self, item_type: str, access_token: str) -> TopItems:
         """Get the current user's top artists or tracks based on calculated affinity."""
-        url = f"{self.base_url}/me/top/{item_type}?limit={limit}&offset={offset}"
+        url = f"{self.base_url}/me/top/{item_type}"
         headers = self.get_headers(access_token)
         response = requests.get(url, headers)
         return TopItems.model_validate(response.json())
 
-    def get_followed_artists(self, access_token: str, limit: int = 10) -> FollowedArtists:
+    def get_followed_artists(self, access_token: str) -> FollowedArtists:
         """Get the current user's followed artists."""
-        url = f"{self.base_url}/me/following?type=artist&limit={limit}"
+        url = f"{self.base_url}/me/following?type=artist"
         headers = self.get_headers(access_token)
         response = requests.get(url, headers)
         return FollowedArtists.model_validate(response.json())
@@ -39,3 +37,9 @@ class SpotifyAPIClient:
         headers = self.get_headers(access_token)
         data = {"context_uri": context_uri}
         requests.put(url, headers=headers, json=data)
+
+    def pause_playback(self, access_token: str) -> None:
+        """ "Pause playback on the user's account."""
+        url = f"{self.base_url}/me/player/pause"
+        headers = self.get_headers(access_token)
+        requests.put(url, headers=headers)
