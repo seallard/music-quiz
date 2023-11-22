@@ -1,6 +1,13 @@
 import pytest
+import requests_mock
 
 from quiz.clients.spotify_client import SpotifyAPIClient
+
+
+@pytest.fixture
+def mock_request():
+    with requests_mock.Mocker() as mock:
+        yield mock
 
 
 @pytest.fixture
@@ -53,3 +60,8 @@ def top_items_response() -> dict:
             }
         ],
     }
+
+
+@pytest.fixture
+def client() -> SpotifyAPIClient:
+    return SpotifyAPIClient()
