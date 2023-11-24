@@ -1,6 +1,6 @@
 from requests_mock import Mocker
 
-from quiz.clients.spotify_client import SpotifyAPIClient
+from app.clients.spotify_client import SpotifyAPIClient
 
 
 def test_get_user_profile(

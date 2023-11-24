@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "quiz"
+name = "app"
 version = "0.1.0"
 description = ""
 authors = ["Sebastian Allard <seallards@gmail.com>"]
@@ -10,6 +10,8 @@ python = "^3.11"
 sqlalchemy = "^2.0.23"
 requests = "^2.31.0"
 pydantic = "^2.5.1"
+flask = "^3.0.0"
+gunicorn = "^21.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
