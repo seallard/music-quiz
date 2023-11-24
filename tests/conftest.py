@@ -1,7 +1,7 @@
 import pytest
 import requests_mock
 
-from quiz.clients.spotify_client import SpotifyAPIClient
+from app.clients.spotify_client import SpotifyAPIClient
 
 
 @pytest.fixture

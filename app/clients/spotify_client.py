@@ -1,4 +1,4 @@
-from quiz.models.spotify_models import FollowedArtists, TopItems, UserProfile
+from app.models.spotify_models import FollowedArtists, TopItems, UserProfile
 
 import requests
 
