@@ -1,4 +1,4 @@
-from app.models.spotify_models import FollowedArtists, TopItems, UserProfile
+from app.dtos.spotify import FollowedArtists, TopItems, UserProfile
 
 import requests
 
