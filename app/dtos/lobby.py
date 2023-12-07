@@ -5,14 +5,14 @@ from app.models.lobby import Lobby
 
 class CreateLobbyRequest(BaseModel):
     name: str
-    owner_id: str
+    owner_id: int
 
 
 class LobbyResponse(BaseModel):
     name: str
-    owner_id: str
+    owner_id: int
     join_code: str
-    members: list[str]
+    members: list[int]
 
 
 def create_lobby_response(lobby: Lobby) -> LobbyResponse:

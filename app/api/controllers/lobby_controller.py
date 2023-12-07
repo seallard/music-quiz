@@ -13,8 +13,8 @@ def create_lobby_controller(lobby_service: LobbyService) -> Blueprint:
         try:
             data = CreateLobbyRequest(**request.json)
             lobby = lobby_service.create_lobby(data)
-            new_lobby = create_lobby_response(lobby)
-            return new_lobby.model_dump_json(), HTTPStatus.CREATED
+            dto = create_lobby_response(lobby).model_dump_json()
+            return dto, HTTPStatus.CREATED
         except ValueError as e:
             return jsonify({"error": str(e)}), HTTPStatus.BAD_REQUEST
 
