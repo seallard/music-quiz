@@ -1,8 +1,11 @@
 from http import HTTPMethod, HTTPStatus
+import logging
 from flask import Blueprint, jsonify, request
 
 from app.dtos.lobby import CreateLobbyRequest, create_lobby_response
 from app.services.lobby_service import LobbyService
+
+logger = logging.getLogger(__name__)
 
 
 def create_lobby_controller(lobby_service: LobbyService) -> Blueprint:
@@ -13,9 +16,10 @@ def create_lobby_controller(lobby_service: LobbyService) -> Blueprint:
         try:
             data = CreateLobbyRequest(**request.json)
             lobby = lobby_service.create_lobby(data)
-            dto = create_lobby_response(lobby).model_dump_json()
-            return dto, HTTPStatus.CREATED
+            response = create_lobby_response(lobby).model_dump_json()
+            return response, HTTPStatus.CREATED
         except ValueError as e:
+            logger.error(f"Invalid request to create lobby: {request.json}, {e}")
             return jsonify({"error": str(e)}), HTTPStatus.BAD_REQUEST
 
     return controller
