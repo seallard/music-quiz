@@ -1,6 +1,10 @@
-import random
-import string
+from app.database.models.lobby import Lobby
+from app.dtos.lobby import LobbyResponse
 
-def generate_lobby_code(length=6):
-    characters = string.ascii_uppercase + string.digits
-    return ''.join(random.choice(characters) for _ in range(length))
+
+def create_lobby_response(lobby: Lobby):
+    return LobbyResponse(
+        id=lobby.id,
+        name=lobby.name,
+        owner_id=lobby.owner_id,
+    )

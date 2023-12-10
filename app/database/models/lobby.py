@@ -1,11 +1,11 @@
-from sqlalchemy import Column, Integer, String
+import uuid
+from sqlalchemy import Column, String
 
 from app.database.database import Base
 
 
 class Lobby(Base):
     __tablename__ = "lobby"
-    id = Column(Integer, primary_key=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String)
-    owner_id = Column(Integer)
-    join_code = Column(String, unique=True)
+    owner_id = Column(String(36), default=lambda: str(uuid.uuid4()))
