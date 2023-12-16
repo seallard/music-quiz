@@ -11,6 +11,7 @@ from app.models.lobby import Lobby
 from app.services.exceptions import (
     LobbyNotFoundException,
     LobbyNotJoinableException,
+    PlayerNotFoundException,
 )
 from app.services.player_service import PlayerService
 from app.utils.lobby_utils import create_lobby_response
@@ -28,10 +29,11 @@ class LobbyService:
         return create_lobby_response(lobby)
 
     def join_lobby(self, lobby_id: UUID, data: LobbyJoinRequest) -> LobbyJoinResponse:
+        if not self.player_service.player_exists(data.player_id):
+            raise PlayerNotFoundException
         lobby: Lobby | None = self.repository.get(lobby_id)
         if not lobby:
             raise LobbyNotFoundException
-
         if not lobby.is_joinable():
             raise LobbyNotJoinableException
         lobby: Lobby = self.repository.add_player(lobby.id, str(data.player_id))

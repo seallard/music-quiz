@@ -9,7 +9,5 @@ class PlayerService:
     def __init__(self, player_repository: PlayerRepository):
         self.player_repository = player_repository
 
-    def get_player(self, player_id: UUID) -> Player:
-        if player := self.player_repository.get(player_id):
-            return player
-        raise PlayerNotFoundException
+    def player_exists(self, player_id: UUID) -> bool:
+        return bool(self.player_repository.get(player_id))
