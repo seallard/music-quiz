@@ -67,7 +67,7 @@ def test_join_lobby_invalid_lobby_id(client: FlaskClient, player: PlayerModel):
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
-def test_join_lobby_invalid_lobby_id(client: FlaskClient, lobby: LobbyModel):
+def test_join_lobby_invalid_player_id(client: FlaskClient, lobby: LobbyModel):
     # GIVEN a join request for a non-existing player
     join_request = LobbyJoinRequest(player_id=get_uuid())
     data = join_request.model_dump_json()
