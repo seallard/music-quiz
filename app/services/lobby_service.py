@@ -34,6 +34,5 @@ class LobbyService:
 
         if not lobby.is_joinable():
             raise LobbyNotJoinableException
-
-        lobby: Lobby = self.repository.add_player(lobby_id=lobby.id, data=data)
+        lobby: Lobby = self.repository.add_player(lobby.id, str(data.player_id))
         return LobbyJoinResponse(lobby_id=lobby.id)

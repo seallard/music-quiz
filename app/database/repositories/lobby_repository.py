@@ -5,7 +5,7 @@ from app.database.models.lobby import LobbyModel
 from app.database.models.player import PlayerModel
 from app.dtos.lobby import CreateLobbyRequest
 from app.models.lobby import Lobby
-from app.utils.utils import generate_uuid
+from app.utils.utils import get_uuid
 
 
 class LobbyRepository:
@@ -17,7 +17,7 @@ class LobbyRepository:
     def create(self, data: CreateLobbyRequest) -> LobbyModel:
         with get_session() as session:
             lobby = LobbyModel(
-                id=generate_uuid(),
+                id=get_uuid(),
                 name=data.name,
                 owner_id=str(data.owner_id),
             )
