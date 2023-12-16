@@ -1,7 +1,3 @@
-class PlayerNotFoundException(Exception):
-    pass
-
-
 class LobbyNotFoundException(Exception):
     pass
 
