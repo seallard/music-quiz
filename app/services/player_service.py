@@ -1,8 +1,6 @@
 from uuid import UUID
 
 from app.database.repositories.player_repository import PlayerRepository
-from app.models.player import Player
-from app.services.exceptions import PlayerNotFoundException
 
 
 class PlayerService:
