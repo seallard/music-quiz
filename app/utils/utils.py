@@ -1,5 +1,5 @@
 import uuid
 
 
-def generate_uuid() -> str:
+def get_uuid() -> str:
     return str(uuid.uuid4())

@@ -1,14 +1,16 @@
 import json
-import uuid
 from flask.testing import FlaskClient
 from http import HTTPStatus
 
-from app.dtos.lobby import CreateLobbyRequest
+from app.database.models.lobby import LobbyModel
+from app.database.models.player import PlayerModel
+from app.dtos.lobby import CreateLobbyRequest, LobbyJoinRequest
+from app.utils.utils import get_uuid
 
 
 def test_create_lobby_success(client: FlaskClient):
     # GIVEN a valid request to create a lobby
-    lobby_request = CreateLobbyRequest(name="test", owner_id=str(uuid.uuid4()))
+    lobby_request = CreateLobbyRequest(name="test", owner_id=get_uuid())
     data = lobby_request.model_dump_json()
 
     # WHEN the request is made
@@ -27,3 +29,23 @@ def test_create_lobby_bad_request(client: FlaskClient):
 
     # THEN the response should be unsuccessful
     assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_join_lobby_success(
+    client: FlaskClient, lobby: LobbyModel, player: PlayerModel
+):
+    # GIVEN an existing player and lobby
+
+    # GIVEN a request from the player to join the lobby
+    join_request = LobbyJoinRequest(player_id=player.id)
+    data = join_request.model_dump_json()
+
+    # WHEN the request is made
+    response = client.post(
+        f"/lobby/{lobby.id}/join",
+        data=data,
+        content_type="application/json",
+    )
+
+    # THEN the response should be successful
+    assert response.status_code == HTTPStatus.OK
