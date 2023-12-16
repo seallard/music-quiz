@@ -49,3 +49,35 @@ def test_join_lobby_success(
 
     # THEN the response should be successful
     assert response.status_code == HTTPStatus.OK
+
+
+def test_join_lobby_invalid_lobby_id(client: FlaskClient, player: PlayerModel):
+    # GIVEN a join request for an existing player
+    join_request = LobbyJoinRequest(player_id=player.id)
+    data = join_request.model_dump_json()
+
+    # WHEN trying to join a lobby that does not exists
+    response = client.post(
+        f"/lobby/{get_uuid()}/join",
+        data=data,
+        content_type="application/json",
+    )
+
+    # THEN the response should be unsuccessful
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_join_lobby_invalid_player_id(client: FlaskClient, lobby: LobbyModel):
+    # GIVEN a join request for a non-existing player
+    join_request = LobbyJoinRequest(player_id=get_uuid())
+    data = join_request.model_dump_json()
+
+    # WHEN the request is made
+    response = client.post(
+        f"/lobby/{lobby.id}/join",
+        data=data,
+        content_type="application/json",
+    )
+
+    # THEN the response should be unsuccessful
+    assert response.status_code == HTTPStatus.BAD_REQUEST
