@@ -6,6 +6,7 @@ from app.dtos.lobby import CreateLobbyRequest, LobbyJoinRequest
 from app.services.exceptions import (
     LobbyNotFoundException,
     LobbyNotJoinableException,
+    PlayerAlreadyInLobbyException,
     PlayerNotFoundException,
 )
 from app.services.lobby_service import LobbyService
@@ -35,6 +36,7 @@ def create_lobby_controller(lobby_service: LobbyService) -> Blueprint:
         except (
             LobbyNotFoundException,
             LobbyNotJoinableException,
+            PlayerAlreadyInLobbyException,
             PlayerNotFoundException,
         ) as e:
             return jsonify({"error": str(e)}), HTTPStatus.BAD_REQUEST

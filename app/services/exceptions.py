@@ -8,3 +8,7 @@ class LobbyNotJoinableException(Exception):
 
 class PlayerNotFoundException(Exception):
     pass
+
+
+class PlayerAlreadyInLobbyException(Exception):
+    pass

@@ -1,4 +1,5 @@
 from app.models.player import Player
+from app.services.exceptions import PlayerAlreadyInLobbyException
 
 
 class Lobby:
@@ -13,4 +14,6 @@ class Lobby:
         return True
 
     def add_player(self, player: Player):
+        if player in self.players:
+            raise PlayerAlreadyInLobbyException
         self.players.append(player)
