@@ -11,8 +11,8 @@ from app.utils.utils import get_uuid
 class LobbyRepository:
     def get(self, lobby_id: UUID) -> Lobby | None:
         with get_session() as session:
-            lobby = session.query(LobbyModel).filter_by(id=str(lobby_id)).first()
-            return ModelConverter.lobby_to_domain(lobby)
+            if lobby := session.query(LobbyModel).filter_by(id=str(lobby_id)).first():
+                return ModelConverter.lobby_to_domain(lobby)
 
     def create(self, data: CreateLobbyRequest) -> LobbyModel:
         with get_session() as session:
