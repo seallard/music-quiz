@@ -1,5 +1,5 @@
-from app.database.models.lobby import Lobby
 from app.dtos.lobby import LobbyResponse
+from app.models.lobby import Lobby
 
 
 def create_lobby_response(lobby: Lobby):
