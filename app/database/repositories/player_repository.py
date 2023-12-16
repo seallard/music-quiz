@@ -9,5 +9,9 @@ from app.models.player import Player
 class PlayerRepository:
     def get(self, player_id: UUID) -> Player | None:
         with get_session() as session:
-            player = session.query(PlayerModel).filter_by(id=str(player_id)).first()
-            return ModelConverter.player_to_domain(player)
+            if (
+                player := session.query(PlayerModel)
+                .filter_by(id=str(player_id))
+                .first()
+            ):
+                return ModelConverter.player_to_domain(player)
