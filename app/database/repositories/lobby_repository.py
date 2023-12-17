@@ -14,7 +14,7 @@ class LobbyRepository:
             if lobby := session.query(LobbyModel).filter_by(id=str(lobby_id)).first():
                 return ModelConverter.lobby_to_domain(lobby)
 
-    def create(self, data: CreateLobbyRequest) -> LobbyModel:
+    def create(self, data: CreateLobbyRequest) -> Lobby:
         with get_session() as session:
             lobby = LobbyModel(
                 id=get_uuid(),
@@ -22,7 +22,7 @@ class LobbyRepository:
                 owner_id=str(data.owner_id),
             )
             session.add(lobby)
-        return lobby
+        return ModelConverter.lobby_to_domain(lobby)
 
     def add_player(self, lobby_id: str, player_id: str):
         with get_session() as session:

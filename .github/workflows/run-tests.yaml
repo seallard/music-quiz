@@ -6,14 +6,32 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.12"
-      - uses: actions/cache@v3
+
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
         with:
-          path: ~/.cache/pypoetry/virtualenvs
-          key: poetry-${{ hashFiles('**/poetry.lock') }}
-      - uses: snok/install-poetry@v1
-      - run: poetry install --no-interaction
-      - run: poetry run pytest
+          virtualenvs-create: false
+
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pypoetry/virtualenvs
+            ~/.poetry
+          key: poetry-${{ hashFiles('**/poetry.lock')
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          poetry install --no-interaction
+          poetry check
+
+      - name: Run Tests
+        run: poetry run pytest
