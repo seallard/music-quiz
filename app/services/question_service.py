@@ -14,11 +14,10 @@ class QuestionService:
     def generate_question(self) -> Question:
         question = Question(text="Who listens the most to Bach?")
         options = [
-            AnswerOption(text="Hilda"),
-            AnswerOption(text="Herbert"),
-            AnswerOption(text="Haakon"),
-            AnswerOption(text="Hannah"),
+            AnswerOption(text="Hilda", is_correct=False),
+            AnswerOption(text="Herbert", is_correct=False),
+            AnswerOption(text="Haakon", is_correct=False),
+            AnswerOption(text="Hannah", is_correct=True),
         ]
-
         question.options = options
         return self.repository.create(question)
