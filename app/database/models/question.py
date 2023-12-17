@@ -11,4 +11,4 @@ class QuestionModel(Base):
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     text = Column(String(500), nullable=False)
 
-    answer_options = relationship(AnswerOptionModel, back_populates="question")
+    options = relationship(AnswerOptionModel, back_populates="question")

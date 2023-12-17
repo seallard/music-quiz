@@ -12,4 +12,4 @@ class AnswerOptionModel(Base):
     is_correct = Column(Boolean, default=False)
     question_id = Column(String(36), ForeignKey("question.id"))
 
-    question = relationship("QuestionModel", back_populates="answer_options")
+    question = relationship("QuestionModel", back_populates="options")
