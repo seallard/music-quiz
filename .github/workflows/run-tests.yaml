@@ -10,10 +10,17 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.12"
-      - uses: actions/cache@v3
+
+      - name: Cache poetry
+        id: cache-poetry
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pypoetry/virtualenvs
           key: poetry-${{ hashFiles('**/poetry.lock') }}
-      - uses: snok/install-poetry@v1
+
+      - name: Install Poetry
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+        uses: snok/install-poetry@v1
+
       - run: poetry install --no-interaction
       - run: poetry run pytest
